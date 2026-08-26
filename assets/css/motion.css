@@ -1,0 +1,54 @@
+/* ---------------------------------------------------------------------------
+   Section reveal. The hidden state is applied by site.js and never by the
+   markup, so every section is visible if the script does not run.
+   --------------------------------------------------------------------------- */
+
+/* The transition lives on the revealed state, not the hidden one, so applying
+   the hidden class does not animate content out on load. */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.is-revealed .reveal-item {
+  opacity: 1;
+  transform: none;
+  transition: opacity 500ms ease-out, transform 500ms ease-out;
+  transition-delay: calc(var(--reveal-index, 0) * 70ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  /* Hold the figures on their finished frame rather than flashing through it. */
+  .project-visual svg,
+  .project-visual svg * {
+    animation: none !important;
+  }
+
+  .chart-line {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  .finance-visual circle {
+    opacity: 1;
+  }
+
+  /* Nothing may stay hidden waiting on a transition that will not run. */
+  .reveal-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

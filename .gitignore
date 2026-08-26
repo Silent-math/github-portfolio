@@ -1,0 +1,6 @@
+node_modules/
+.playwright-browsers/
+playwright-report/
+test-results/
+design-exports/
+.DS_Store

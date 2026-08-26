@@ -1,0 +1,16 @@
+{
+  "name": "silent-math-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static GitHub Pages portfolio for Rodrigo Pizarro.",
+  "scripts": {
+    "dev": "http-server . -a 127.0.0.1 -p 4173 -c-1",
+    "validate": "html-validate index.html work.html about.html 404.html",
+    "test": "npm run validate && playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "html-validate": "^10.4.0",
+    "http-server": "^14.1.1"
+  }
+}

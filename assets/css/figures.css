@@ -1,0 +1,253 @@
+/* ---------------------------------------------------------------------------
+   Figures. Flat, hairline, no glow: these should read as plates in a paper.
+   --------------------------------------------------------------------------- */
+
+.project-visual {
+  position: relative;
+  display: flex;
+  min-height: 320px;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  padding: 24px;
+  border-left: 1px solid var(--rule);
+  background: var(--bg-deep);
+  contain: paint;
+}
+
+.project-visual svg {
+  width: 100%;
+  margin-block: auto;
+  /* The pointer tilt is kept as a mechanism but scaled to a third of what
+     site.js reports, so it registers without announcing itself. */
+  transform: perspective(1200px) rotateX(calc(var(--tilt-x, 0deg) * 0.3)) rotateY(calc(var(--tilt-y, 0deg) * 0.3));
+  transform-origin: center;
+  transition: transform 220ms ease;
+}
+
+.project-visual.is-reactive svg {
+  transition: none;
+  will-change: transform;
+}
+
+/* Idle motion pauses while the figure is off screen. site.js toggles
+   .is-offscreen from an IntersectionObserver. The default is running, so a
+   figure still animates (rather than sitting on an invisible keyframe) if the
+   script never gets to it. */
+.project-visual.is-offscreen svg * {
+  animation-play-state: paused;
+}
+
+.chart-grid path {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+/* The band path hugs the line too tightly to read as an interval: it only
+   ever looked like a glow, so it is off. */
+.chart-band {
+  fill: none;
+}
+
+.chart-glow {
+  fill: none;
+  stroke: none;
+}
+
+/* --dash is the measured path length, written once by site.js. */
+.chart-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-dasharray: var(--dash, 900);
+  stroke-dashoffset: 0;
+  stroke-width: 1.5;
+  animation: draw-line 5s ease-in-out infinite;
+}
+
+/* The cycle starts and ends on the finished curve, so a paused figure rests
+   on a drawn chart rather than an empty one. The reset to undrawn happens
+   while opacity is 0, which is what keeps the loop seamless. */
+@keyframes draw-line {
+  /* 1.5s holding the finished curve */
+  0%,
+  30% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  /* 400ms fade out */
+  38% {
+    opacity: 0;
+    stroke-dashoffset: 0;
+  }
+
+  /* reset to undrawn while nothing is painted */
+  38.5% {
+    opacity: 0;
+    stroke-dashoffset: var(--dash, 900);
+  }
+
+  40% {
+    opacity: 1;
+    stroke-dashoffset: var(--dash, 900);
+  }
+
+  /* 3s draw */
+  100% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+.finance-visual circle {
+  fill: var(--accent);
+  stroke: none;
+  animation: dot-pulse 3.4s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.28;
+  }
+}
+
+.thesis-visual {
+  border-right: 1px solid var(--rule);
+  border-left: 0;
+}
+
+/* Belief regions breathe, out of phase with each other. */
+.thesis-visual [fill="url(#cluster-a)"],
+.thesis-visual [fill="url(#cluster-b)"] {
+  animation: breathe 3.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.thesis-visual [fill="url(#cluster-a)"] {
+  fill: rgba(224, 122, 53, 0.05);
+  stroke: rgba(224, 122, 53, 0.28);
+  stroke-width: 1;
+}
+
+.thesis-visual [fill="url(#cluster-b)"] {
+  fill: rgba(203, 180, 146, 0.04);
+  stroke: rgba(203, 180, 146, 0.26);
+  stroke-width: 1;
+  animation-delay: -1.6s;
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+.project-thesis .project-copy {
+  order: 2;
+}
+
+.project-thesis .project-visual {
+  order: 1;
+}
+
+.evidence-a {
+  fill: var(--accent);
+}
+
+.evidence-b {
+  fill: var(--sand);
+}
+
+/* Evidence points wander a couple of user units, desynchronised by a negative
+   delay per point so they never drift as a block. */
+.evidence-points circle {
+  animation: drift 3.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.evidence-b circle {
+  animation-duration: 3.6s;
+}
+
+.evidence-points circle:nth-child(2) {
+  animation-delay: -0.64s;
+}
+
+.evidence-points circle:nth-child(3) {
+  animation-delay: -1.28s;
+}
+
+.evidence-points circle:nth-child(4) {
+  animation-delay: -1.92s;
+}
+
+.evidence-points circle:nth-child(5) {
+  animation-delay: -2.56s;
+}
+
+/* Units are viewBox units: the figure renders at roughly 0.8 scale, so this
+   is about ten pixels of travel per step. The easing gives each step a fast
+   attack and a slow settle rather than a constant slide. */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(13px, -10px);
+  }
+
+  50% {
+    transform: translate(5px, 13px);
+  }
+
+  75% {
+    transform: translate(-13px, 7px);
+  }
+}
+
+/* The conflict marker: its dash marches slowly, so the one unresolved part of
+   the figure is the one part that never settles. */
+.unknown-ring {
+  fill: var(--bg-deep);
+  stroke: var(--copper);
+  stroke-dasharray: 3 4;
+  stroke-dashoffset: 0;
+  stroke-width: 1;
+  animation: ring-march 9s linear infinite;
+}
+
+@keyframes ring-march {
+  to {
+    stroke-dashoffset: -70;
+  }
+}
+
+.unknown-core {
+  fill: var(--copper);
+}
+
+.unknown-tick {
+  fill: none;
+  stroke: rgba(194, 83, 42, 0.42);
+  stroke-width: 1;
+}
+
+.work-footer {
+  display: flex;
+  padding-top: 24px;
+  align-items: center;
+  gap: 20px;
+}

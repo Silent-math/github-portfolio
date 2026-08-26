@@ -1,0 +1,188 @@
+/* ---------------------------------------------------------------------------
+   Responsive
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 960px) {
+  .page-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .project,
+  .project-thesis {
+    grid-template-columns: 1fr;
+  }
+
+  .project-visual {
+    min-height: 300px;
+    border-top: 1px solid var(--rule);
+    border-left: 0;
+  }
+
+  .project-thesis .project-copy,
+  .project-thesis .project-visual {
+    order: initial;
+  }
+
+  .thesis-visual {
+    border-right: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --gutter: 36px;
+  }
+
+  /* The wordmark replaced a 34px box, so the header needs the space back. */
+  .nav-inner {
+    min-height: 60px;
+    gap: 12px;
+  }
+
+  .brand {
+    font-size: var(--fs-small);
+  }
+
+  .nav-links {
+    gap: 14px;
+  }
+
+  .nav-links a {
+    font-size: var(--fs-small);
+  }
+
+  .nav-links .nav-cta {
+    padding: 5px 9px;
+  }
+
+  .project-visual {
+    min-height: 260px;
+    padding: 18px;
+  }
+
+  .work-footer,
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-inner {
+    padding-block: 18px;
+    gap: 6px;
+  }
+
+  .facts-grid,
+  .facts-grid-two {
+    grid-template-columns: 1fr;
+  }
+
+  .fact {
+    padding: 16px 0;
+  }
+
+  .fact + .fact {
+    padding-left: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 0;
+  }
+
+  .case-header,
+  .case-body,
+  .resume-entry,
+  .compact-section,
+  .about-lede {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .about-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .about-block + .about-block {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .award-list li {
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 14px;
+  }
+}
+
+/* Under about 45 characters a justified line breaks badly, so drop back to
+   ragged right on small screens. */
+@media (max-width: 600px) {
+  .project-copy > p:not(.technology-line),
+  .project-methods li,
+  .resume-entry li,
+  .other-projects-list li,
+  .education-copy,
+  .about-intro,
+  .case-prose > p,
+  .method-flow li {
+    text-align: left;
+  }
+}
+
+/* Five items in the header (wordmark, three links, the language switch) stop
+   fitting on one row here, and Spanish runs longer than English, so the links
+   drop to a second row rather than pushing the page sideways. */
+@media (max-width: 560px) {
+  .nav-inner {
+    min-height: 0;
+    flex-wrap: wrap;
+    padding-block: 9px;
+    gap: 4px 10px;
+  }
+
+  .nav-links {
+    width: 100%;
+  }
+}
+
+/* Phone widths: the wordmark plus three nav items no longer fit on one row
+   with the GitHub item styled as an outlined chip, so it becomes a plain link
+   there. Everything stays reachable. */
+@media (max-width: 460px) {
+  :root {
+    --gutter: 28px;
+  }
+
+  .nav-inner {
+    gap: 10px;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  .brand {
+    white-space: nowrap;
+  }
+
+  .nav-links .nav-cta {
+    padding: 0;
+    border: 0;
+  }
+}
+
+/* Narrowest phones: a tighter gutter and no decorative arrow in the header,
+   which is what keeps the wordmark and the three nav items on one row. */
+@media (max-width: 360px) {
+  :root {
+    --gutter: 20px;
+  }
+
+  .nav-inner {
+    gap: 6px 8px;
+  }
+
+  .nav-links {
+    gap: 10px;
+  }
+
+  .nav-links .nav-cta span {
+    display: none;
+  }
+}

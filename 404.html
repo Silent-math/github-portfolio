@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d0b09">
+    <meta name="robots" content="noindex">
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=DM+Sans:opsz,wght@9..40,400..600&family=Fraunces:opsz,wght@9..144,400..600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/tokens.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/figures.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/motion.css">
+    <script>
+      // See index.html for what this does. Kept inline on every page because it
+      // has to run before the body paints.
+      (function () {
+        var root = document.documentElement;
+        var query = new URLSearchParams(window.location.search).get("lang");
+        var stored = null;
+        try { stored = window.localStorage.getItem("rp-lang"); } catch (error) { stored = null; }
+        var lang = query === "es" || query === "en" ? query : stored === "es" ? "es" : "en";
+        root.lang = lang;
+        root.setAttribute("data-lang", lang);
+        if (lang !== "en") {
+          root.classList.add("i18n-pending");
+          window.setTimeout(function () { root.classList.remove("i18n-pending"); }, 900);
+        }
+      })();
+    </script>
+    <script type="module" src="assets/js/main.js"></script>
+    <title>Page not found | Rodrigo Pizarro</title>
+  </head>
+  <body data-page="notfound">
+    <a class="skip-link" href="#main-content" data-i18n="a11y.skip">Skip to content</a>
+
+    <nav class="site-nav" aria-label="Primary navigation" data-i18n-attr="aria-label:a11y.nav">
+      <div class="shell nav-inner">
+        <a class="brand" href="index.html" aria-label="Rodrigo Pizarro, home" data-i18n-attr="aria-label:a11y.brand">
+          <span>Rodrigo Pizarro</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#experience" data-i18n="nav.experience">Experience</a>
+          <a href="work.html" data-i18n="nav.work">Work</a>
+          <a class="nav-cta" href="https://github.com/Silent-math" target="_blank" rel="noreferrer" data-i18n="action.github">GitHub <span aria-hidden="true">↗</span></a>
+          <div class="lang-switch" role="group" aria-label="Language" data-i18n-attr="aria-label:a11y.lang">
+            <button type="button" class="lang-option" data-lang-option="en" aria-pressed="true">EN</button>
+            <span class="lang-sep" aria-hidden="true">/</span>
+            <button type="button" class="lang-option" data-lang-option="es" aria-pressed="false">ES</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="not-found shell" id="main-content">
+      <div>
+        <div class="not-found-code" data-i18n="nf.label">Error 404</div>
+        <h1 data-i18n="nf.title">Page not found</h1>
+        <p data-i18n="nf.body">The requested page does not exist.</p>
+        <a class="button button-primary" href="index.html" data-i18n="nf.home">Home</a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <span>© <span data-current-year>2026</span> Rodrigo Pizarro</span>
+      </div>
+    </footer>
+  </body>
+</html>

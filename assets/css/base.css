@@ -1,0 +1,156 @@
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+/* Set by the inline bootstrap in <head> when a non-default language is stored,
+   and cleared by i18n.js once the page is translated. It hides the body for the
+   few milliseconds before the swap so English never flashes past. The bootstrap
+   also clears it on a timer, so a script failure cannot leave a blank page. */
+html.i18n-pending body {
+  visibility: hidden;
+}
+
+/* The language swap dips the page rather than cutting between two texts. */
+html.lang-fade body {
+  opacity: 0.4;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  transition: opacity 180ms ease;
+  color: var(--text-2);
+  font-family: var(--font-body);
+  font-optical-sizing: auto;
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: var(--lh-body);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+dl,
+dd {
+  margin-top: 0;
+}
+
+p {
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--text);
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 500;
+  line-height: var(--lh-heading);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  letter-spacing: var(--tr-h1);
+}
+
+h2 {
+  margin-bottom: 0;
+  font-size: var(--fs-h2);
+  letter-spacing: var(--tr-h2);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  letter-spacing: var(--tr-h3);
+}
+
+/* Running text is justified with hyphenation. Headings, kickers, links,
+   buttons and the contact block stay ragged. */
+.project-copy > p:not(.technology-line),
+.project-methods li,
+.resume-entry li,
+.other-projects-list li,
+.education-copy,
+.about-intro,
+.case-prose > p,
+.method-flow li {
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  text-align: justify;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+:focus-visible {
+  border-radius: var(--radius);
+  outline: 2px solid var(--accent-soft);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 12px;
+  left: 12px;
+  padding: 10px 14px;
+  transform: translateY(-150%);
+  border-radius: var(--radius);
+  background: var(--text);
+  color: var(--bg);
+  font-size: var(--fs-small);
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.shell {
+  width: min(calc(100% - var(--gutter)), var(--shell));
+  margin-inline: auto;
+}
+
+/* Anchor targets must clear the sticky header, or a smooth scroll to #about
+   parks the heading underneath it. */
+main [id] {
+  scroll-margin-top: 84px;
+}

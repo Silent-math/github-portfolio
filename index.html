@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d0b09">
+    <meta name="description" content="Data scientist at Tenpo (Credicorp), Santiago, Chile. Civil Mathematical Engineer, UTFSM, 2024.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Rodrigo Pizarro">
+    <meta property="og:description" content="Data scientist at Tenpo (Credicorp), Santiago, Chile. Civil Mathematical Engineer, UTFSM, 2024.">
+    <meta property="og:url" content="https://silent-math.github.io/">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary">
+    <link rel="canonical" href="https://silent-math.github.io/">
+    <link rel="alternate" hreflang="en" href="https://silent-math.github.io/">
+    <link rel="alternate" hreflang="es" href="https://silent-math.github.io/?lang=es">
+    <link rel="alternate" hreflang="x-default" href="https://silent-math.github.io/">
+    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=DM+Sans:opsz,wght@9..40,400..600&family=Fraunces:opsz,wght@9..144,400..600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/tokens.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/figures.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="assets/css/motion.css">
+    <script>
+      // Language bootstrap. Runs before the body paints so a stored Spanish
+      // preference never shows a frame of English. The timeout is the failsafe:
+      // if the module never loads, the page still appears.
+      (function () {
+        var root = document.documentElement;
+        var query = new URLSearchParams(window.location.search).get("lang");
+        var stored = null;
+        try { stored = window.localStorage.getItem("rp-lang"); } catch (error) { stored = null; }
+        var lang = query === "es" || query === "en" ? query : stored === "es" ? "es" : "en";
+        root.lang = lang;
+        root.setAttribute("data-lang", lang);
+        if (lang !== "en") {
+          root.classList.add("i18n-pending");
+          window.setTimeout(function () { root.classList.remove("i18n-pending"); }, 900);
+        }
+      })();
+    </script>
+    <script type="module" src="assets/js/main.js"></script>
+    <title>Rodrigo Pizarro | Data Scientist</title>
+  </head>
+  <body data-page="home">
+    <a class="skip-link" href="#main-content" data-i18n="a11y.skip">Skip to content</a>
+
+    <nav class="site-nav" aria-label="Primary navigation" data-i18n-attr="aria-label:a11y.nav">
+      <div class="shell nav-inner">
+        <a class="brand" href="index.html" aria-label="Rodrigo Pizarro, home" aria-current="page" data-i18n-attr="aria-label:a11y.brand">
+          <span>Rodrigo Pizarro</span>
+        </a>
+        <div class="nav-links">
+          <a href="#experience" data-i18n="nav.experience">Experience</a>
+          <a href="work.html" data-i18n="nav.work">Work</a>
+          <a class="nav-cta" href="https://github.com/Silent-math" target="_blank" rel="noreferrer" data-i18n="action.github">GitHub <span aria-hidden="true">↗</span></a>
+          <div class="lang-switch" role="group" aria-label="Language" data-i18n-attr="aria-label:a11y.lang">
+            <button type="button" class="lang-option" data-lang-option="en" aria-pressed="true">EN</button>
+            <span class="lang-sep" aria-hidden="true">/</span>
+            <button type="button" class="lang-option" data-lang-option="es" aria-pressed="false">ES</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main id="main-content">
+      <header class="hero home-hero">
+        <canvas class="signal-canvas" data-signal-canvas aria-hidden="true"></canvas>
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="shell hero-grid hero-grid-single">
+          <div class="hero-copy">
+            <h1>Rodrigo Pizarro</h1>
+            <p class="hero-role" data-i18n="hero.role">Data Scientist at Tenpo (Credicorp), Santiago, Chile. Civil Mathematical Engineer, UTFSM, 2024.</p>
+            <p class="hero-lede" data-i18n="hero.lede">I develop and deploy predictive systems for financial products, from data pipelines and model training to backtesting and monitoring. My independent work focuses on quantitative finance, computer vision, and predictive uncertainty.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="https://github.com/Silent-math" target="_blank" rel="noreferrer" data-i18n="action.github">GitHub</a>
+              <a class="button button-secondary" href="mailto:rodrigo.pizarro12@gmail.com" data-i18n="action.email">Email</a>
+              <a class="button button-secondary" href="https://www.linkedin.com/in/rodrigo-pizarro-alegr%C3%ADa-38b282316/" target="_blank" rel="noreferrer" data-i18n="action.linkedin">LinkedIn</a>
+              <a class="button button-secondary" href="assets/docs/rodrigo-pizarro-cv-en.pdf" target="_blank" rel="noopener noreferrer" aria-label="CV in English, PDF, opens in a new tab" data-i18n="action.cv" data-i18n-attr="href:action.cvHref;aria-label:a11y.cv">CV <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="section shell work-section" id="work">
+        <div class="section-heading section-heading-plain">
+          <h2 data-i18n="work.heading">Work</h2>
+        </div>
+
+        <article class="project project-finance">
+          <div class="project-copy">
+            <h3 data-i18n="work.p1.title">01 · Information diffusion in financial markets · 2026</h3>
+            <p data-i18n="work.p1.desc">Event study on 66 US large caps across 11 GICS sectors, using daily data from 2015 to 2025 and SEC 8-K item 2.02 earnings filings.</p>
+            <ul class="project-methods">
+              <li data-i18n="work.p1.m1">Estimated abnormal returns around each filing with rolling factor models.</li>
+              <li data-i18n="work.p1.m2">Tested lagged return propagation to sector peers against permutation and matched non-event nulls.</li>
+              <li data-i18n="work.p1.m3">Estimated transfer-entropy networks between stocks with factor and common-volatility controls.</li>
+              <li data-i18n="work.p1.m4">Fit a self-exciting daily count model for extreme moves and scored it out of sample.</li>
+              <li data-i18n="work.p1.m5">Modeled the post-event return distribution and checked tail calibration.</li>
+            </ul>
+            <p class="technology-line" data-i18n="work.p1.tech">Python, event studies, transfer entropy, Hawkes processes</p>
+            <a class="text-link" href="https://github.com/Silent-math/Information-difussion-theory" target="_blank" rel="noreferrer" data-i18n="action.repository">Repository <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="project-visual finance-visual visual-only" data-reactive-visual aria-hidden="true">
+            <svg viewBox="0 0 620 360">
+              <defs>
+                <linearGradient id="area-fill" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0" stop-color="#ff7a1a" stop-opacity=".3"></stop>
+                  <stop offset="1" stop-color="#ff7a1a" stop-opacity="0"></stop>
+                </linearGradient>
+              </defs>
+              <g class="chart-grid">
+                <path d="M44 50H594M44 120H594M44 190H594M44 260H594M44 330H594"></path>
+                <path d="M44 30V330M154 30V330M264 30V330M374 30V330M484 30V330M594 30V330"></path>
+              </g>
+              <path class="chart-band" d="M44 232C72 68 100 92 132 176C168 268 216 225 260 210C312 191 366 220 420 214C479 207 535 219 594 215L594 246C535 250 479 239 420 247C366 252 312 228 260 248C216 264 168 306 132 222C100 145 72 127 44 284Z" fill="url(#area-fill)"></path>
+              <path class="chart-glow" d="M44 257C72 97 101 119 132 199C168 287 216 244 260 229C312 210 366 236 420 230C479 223 535 235 594 231"></path>
+              <path class="chart-line" d="M44 257C72 97 101 119 132 199C168 287 216 244 260 229C312 210 366 236 420 230C479 223 535 235 594 231"></path>
+              <circle cx="72" cy="97" r="5"></circle>
+            </svg>
+          </div>
+        </article>
+
+        <article class="project project-thesis">
+          <div class="project-copy">
+            <h3 data-i18n="work.p2.title">02 · E-KAN thesis · UTFSM 2024</h3>
+            <p data-i18n="work.p2.desc">My engineering thesis on image classification under uncertainty. The model pairs a frozen EfficientNet backbone with a Kolmogorov-Arnold transformer and a Dempster-Shafer evidential output layer.</p>
+            <ul class="project-methods">
+              <li data-i18n="work.p2.m1">Designed convolutional and Kolmogorov-Arnold architectures with evidential output layers built on belief functions.</li>
+              <li data-i18n="work.p2.m2">Implemented Dempster-Shafer combination and the training loop in PyTorch, with unit tests over the evidential layers.</li>
+              <li data-i18n="work.p2.m3">Applied transfer learning from a frozen EfficientNet backbone under distribution shift between source and target classes.</li>
+              <li data-i18n="work.p2.m4">Studied predictive uncertainty and calibration against softmax and temperature-scaling baselines.</li>
+              <li data-i18n="work.p2.m5">Explored set-valued outputs that allow cautious classification and abstention.</li>
+            </ul>
+            <p class="technology-line" data-i18n="work.p2.tech">PyTorch, Kolmogorov-Arnold networks, Dempster-Shafer, calibration</p>
+            <a class="text-link" href="https://github.com/Silent-math/Dempster-Shafer-KAN-NN-for-image-classification" target="_blank" rel="noreferrer" data-i18n="action.repository">Repository <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="project-visual thesis-visual visual-only" data-reactive-visual aria-hidden="true">
+            <svg viewBox="0 0 620 360">
+              <defs>
+                <radialGradient id="cluster-a"><stop offset="0" stop-color="#ff7a1a" stop-opacity=".55"></stop><stop offset="1" stop-color="#ff7a1a" stop-opacity=".03"></stop></radialGradient>
+                <radialGradient id="cluster-b"><stop offset="0" stop-color="#d5b58a" stop-opacity=".46"></stop><stop offset="1" stop-color="#d5b58a" stop-opacity=".03"></stop></radialGradient>
+              </defs>
+              <g class="chart-grid">
+                <path d="M44 50H594M44 120H594M44 190H594M44 260H594M44 330H594"></path>
+                <path d="M44 30V330M154 30V330M264 30V330M374 30V330M484 30V330M594 30V330"></path>
+              </g>
+              <circle cx="216" cy="176" r="136" fill="url(#cluster-a)"></circle>
+              <circle cx="404" cy="186" r="136" fill="url(#cluster-b)"></circle>
+              <g class="evidence-points evidence-a">
+                <circle cx="156" cy="142" r="4"></circle><circle cx="197" cy="102" r="4"></circle><circle cx="225" cy="191" r="4"></circle><circle cx="165" cy="225" r="4"></circle><circle cx="258" cy="138" r="4"></circle>
+              </g>
+              <g class="evidence-points evidence-b">
+                <circle cx="376" cy="132" r="4"></circle><circle cx="447" cy="111" r="4"></circle><circle cx="468" cy="208" r="4"></circle><circle cx="392" cy="246" r="4"></circle><circle cx="427" cy="173" r="4"></circle>
+              </g>
+              <circle class="unknown-ring" cx="315" cy="180" r="19"></circle>
+              <circle class="unknown-core" cx="315" cy="180" r="5"></circle>
+              <path class="unknown-tick" d="M315 146V126M349 180H369M315 214V234M281 180H261"></path>
+            </svg>
+          </div>
+        </article>
+
+        <div class="work-footer">
+          <a class="button button-secondary" href="work.html" data-i18n="work.more">Work <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <section class="section shell about-section" id="about">
+        <div class="about-lede" data-reveal-group>
+          <div class="section-heading section-heading-plain">
+            <h2 data-i18n="about.heading">About</h2>
+          </div>
+          <p class="about-intro" data-i18n="about.intro">I&#39;m a data scientist at Tenpo, a Chilean fintech, where I work on customer lifetime value forecasting, classification, and risk models for credit card segments. I studied Civil Mathematical Engineering at Universidad Técnica Federico Santa María and my thesis was on evidential deep learning for image classification under uncertainty. At Demafront I built a forecasting SaaS in Python from scratch, including the hierarchical forecasting and reconciliation APIs that run on product trees with thousands of nodes. In my free time, I build projects in computer vision, quantitative finance, and data science.</p>
+        </div>
+
+        <div class="about-columns" data-reveal-group>
+          <div class="about-block">
+            <h3 data-i18n="about.skills">Skills</h3>
+            <dl class="skill-list">
+              <div class="skill">
+                <dt data-i18n="about.skill.forecasting.label">Forecasting and time series</dt>
+                <dd data-i18n="about.skill.forecasting.value">MLForecast, hierarchical reconciliation, backtesting</dd>
+              </div>
+              <div class="skill">
+                <dt data-i18n="about.skill.modeling.label">Modeling</dt>
+                <dd data-i18n="about.skill.modeling.value">gradient boosting, PyTorch, uncertainty quantification, evidential and Dempster-Shafer methods</dd>
+              </div>
+              <div class="skill">
+                <dt data-i18n="about.skill.data.label">Data</dt>
+                <dd data-i18n="about.skill.data.value">Python, SQL, BigQuery and Dataform, pandas</dd>
+              </div>
+              <div class="skill">
+                <dt data-i18n="about.skill.llm.label">LLM systems</dt>
+                <dd data-i18n="about.skill.llm.value">RAG pipelines, LangChain, evaluation with Ragas and TruLens</dd>
+              </div>
+              <div class="skill">
+                <dt data-i18n="about.skill.product.label">Product</dt>
+                <dd data-i18n="about.skill.product.value">Next.js, TypeScript, Supabase</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="about-block">
+            <h3 data-i18n="about.awards">Awards</h3>
+            <ul class="award-list">
+              <li><span class="award-year">2024</span><span data-i18n="about.award.2024">Thesis grade 100/100, Universidad Técnica Federico Santa María</span></li>
+              <li><span class="award-year">2022</span><span data-i18n="about.award.2022">Premio al Mérito Académico, Universidad Técnica Federico Santa María</span></li>
+              <li><span class="award-year">2020</span><span data-i18n="about.award.2020">Lista de Excelencia, Universidad Técnica Federico Santa María</span></li>
+              <li><span class="award-year">2019</span><span data-i18n="about.award.2019">Bronze medal, CMAT national mathematics championship, senior individual category</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shell resume-section" id="experience">
+        <div class="section-heading section-heading-plain">
+          <h2 data-i18n="experience.heading">Experience</h2>
+        </div>
+
+        <div class="resume-list">
+          <article class="resume-entry">
+            <h3 data-i18n="experience.tenpo.title">Data Scientist · Tenpo, DS&amp;AI team · Santiago</h3>
+            <ul>
+              <li data-i18n="experience.tenpo.b1">Built an end-to-end Customer Lifetime Value forecasting pipeline for more than one million credit card users, from BigQuery processing to Vertex AI training, deployment, backtesting, and monitoring.</li>
+              <li data-i18n="experience.tenpo.b2">Modeled six revenue and cost components with direct multi-horizon XGBoost forecasts.</li>
+              <li data-i18n="experience.tenpo.b3">Developed discrete-time competing-risk models for delinquency and voluntary closure, validated with rolling-origin out-of-time backtests.</li>
+              <li data-i18n="experience.tenpo.b4">Built two-part probabilistic models and portfolio credit-risk exposure estimates with horizon-specific probability calibration.</li>
+            </ul>
+          </article>
+
+          <article class="resume-entry">
+            <h3 data-i18n="experience.demafront.title">Mathematical Modeling Engineer · Demafront</h3>
+            <ul>
+              <li data-i18n="experience.demafront.b1">Designed and deployed a cloud-native forecasting SaaS API in Python for hundreds of thousands of time series.</li>
+              <li data-i18n="experience.demafront.b2">Designed a scalable hierarchical reconciliation method for product trees with thousands of nodes where MinT is ill-conditioned or computationally impractical.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section shell compact-section" id="education">
+        <div class="section-heading section-heading-plain">
+          <h2 data-i18n="education.heading">Education</h2>
+        </div>
+        <p class="education-copy" data-i18n="education.copy">Civil Mathematical Engineering, Universidad Técnica Federico Santa María, 2024. Thesis on CNN and Kolmogorov-Arnold network architectures with Dempster-Shafer evidential output layers for image classification under uncertainty. Thesis grade 100/100.</p>
+      </section>
+
+      <section class="section shell compact-section" id="other-projects">
+        <div class="section-heading section-heading-plain">
+          <h2 data-i18n="other.heading">Other projects</h2>
+        </div>
+        <ul class="other-projects-list">
+          <li data-i18n="other.i1">Véndelo, a social commerce mobile app built with Next.js, TypeScript, Supabase, and PostgreSQL. In development.</li>
+          <li data-i18n="other.i2">RetinaNet (Focal Loss for Dense Object Detection) implemented from scratch in PyTorch.</li>
+        </ul>
+      </section>
+
+      <section class="shell contact-panel" id="contact">
+        <div>
+          <h2 data-i18n="contact.heading">Contact</h2>
+        </div>
+        <div class="contact-actions social-actions">
+          <a class="button button-primary" href="mailto:rodrigo.pizarro12@gmail.com" data-i18n="action.email">Email</a>
+          <a class="text-link" href="https://github.com/Silent-math" target="_blank" rel="noreferrer" data-i18n="action.github">GitHub <span aria-hidden="true">↗</span></a>
+          <a class="text-link" href="https://www.linkedin.com/in/rodrigo-pizarro-alegr%C3%ADa-38b282316/" target="_blank" rel="noreferrer" data-i18n="action.linkedin">LinkedIn <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <span>© <span data-current-year>2026</span> Rodrigo Pizarro</span>
+      </div>
+    </footer>
+  </body>
+</html>
