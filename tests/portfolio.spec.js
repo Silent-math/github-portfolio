@@ -62,19 +62,48 @@ test("every page ships a content security policy with no inline allowance", asyn
   }
 });
 
-test("plates that pan on a phone say so, and stop saying so once panned", async ({ page }) => {
+test("every plate that pans on a phone can be panned, and says so", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/index.html");
-  const plate = page.locator(".project-finance .plate");
-  await plate.scrollIntoViewIfNeeded();
-  const cue = plate.locator(".plate-swipe");
-  await expect(cue).toBeVisible();
-  await expect(cue).toHaveCSS("opacity", "1");
 
-  await plate.locator(".plate-scroll").evaluate((node) => {
-    node.scrollLeft = 200;
-  });
-  await expect(cue).toHaveCSS("opacity", "0");
+  for (const [path, selectors] of [
+    ["/index.html", [".project-finance .plate", ".project-thesis .plate"]],
+    ["/work.html", ["#information-diffusion .plate", "#ekan-thesis .plate"]],
+    ["/404.html", [".plate-compact"]],
+  ]) {
+    await page.goto(path);
+
+    for (const selector of selectors) {
+      const plate = page.locator(selector);
+      await plate.scrollIntoViewIfNeeded();
+
+      const cue = plate.locator(".plate-swipe");
+      await expect(cue, selector).toBeVisible();
+      await expect(cue, selector).toHaveCSS("opacity", "1");
+
+      // The regression this guards: the simplex plate carried
+      // `pointer-events: none` so that a stray hover could not disturb its
+      // tour, which also made it untouchable, so no finger could ever pan it.
+      // Content wider than the box is not enough; the box has to be hittable.
+      const reachable = await plate.evaluate((node) => {
+        const scroller = node.querySelector(".plate-scroll");
+        const box = scroller.getBoundingClientRect();
+        const hit = document.elementFromPoint(
+          Math.round(box.left + box.width / 2),
+          Math.round(box.top + box.height / 2),
+        );
+        return {
+          pans: scroller.scrollWidth > scroller.clientWidth,
+          hittable: hit ? scroller.contains(hit) : false,
+        };
+      });
+      expect(reachable, selector).toEqual({ pans: true, hittable: true });
+
+      await plate.locator(".plate-scroll").evaluate((node) => {
+        node.scrollLeft = 200;
+      });
+      await expect(cue, selector).toHaveCSS("opacity", "0");
+    }
+  }
 });
 
 test("the home page follows the supplied section order", async ({ page }) => {

@@ -191,7 +191,6 @@ export function initSimplex() {
       held = null;
       originTimestamp = null;
     }
-    plate.classList.toggle("is-steering", steering);
     if (steering) plate.classList.add("is-explored");
     if (toggle) toggle.setAttribute("aria-pressed", String(steering));
     start();

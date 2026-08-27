@@ -387,13 +387,10 @@ text.plate-label-key {
    hidden where there is no hover, because there the tour is the whole thing.
    --------------------------------------------------------------------------- */
 
-.plate-cued {
-  pointer-events: none;
-}
-
-.plate-cued.is-steering {
-  pointer-events: auto;
-}
+/* The plate must stay hit-testable: it is a scroll container on a phone, and
+   making it inert is what stopped it panning. Nothing needs CSS to keep the
+   pointer out during the tour, because simplex.js ignores pointermove unless
+   the reader has actually taken the pointer. */
 
 .plate-toggle {
   position: absolute;
@@ -410,7 +407,6 @@ text.plate-label-key {
   background: var(--bg-deep);
   color: var(--accent-soft);
   cursor: pointer;
-  pointer-events: auto;
   transition: border-color 150ms ease, color 150ms ease;
 }
 
