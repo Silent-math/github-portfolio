@@ -1,6 +1,7 @@
 import { initI18n } from "./i18n.js";
-import { initSignalCanvas } from "./signal-canvas.js";
+import { initForecast } from "./forecast.js";
 import { initFigures } from "./figures.js";
+import { initSimplex } from "./simplex.js";
 import { initReveal } from "./reveal.js";
 
 // Language first: it clears the pre-paint guard set by the inline bootstrap in
@@ -11,6 +12,7 @@ document.querySelectorAll("[data-current-year]").forEach((node) => {
   node.textContent = String(new Date().getFullYear());
 });
 
-initSignalCanvas();
+initForecast();
 initFigures();
+initSimplex();
 initReveal();

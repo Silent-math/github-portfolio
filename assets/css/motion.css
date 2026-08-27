@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------------------
-   Section reveal. The hidden state is applied by site.js and never by the
+   Section reveal. The hidden state is applied by reveal.js and never by the
    markup, so every section is visible if the script does not run.
    --------------------------------------------------------------------------- */
 
@@ -31,19 +31,80 @@
     animation-iteration-count: 1 !important;
   }
 
-  /* Hold the figures on their finished frame rather than flashing through it. */
-  .project-visual svg,
-  .project-visual svg * {
+  /* Hold every plate on its finished frame rather than flashing through it. */
+  .plate-svg,
+  .plate-svg * {
     animation: none !important;
   }
 
-  .chart-line {
+  .plate-series,
+  .plate-peer {
     opacity: 1;
     stroke-dashoffset: 0;
   }
 
-  .finance-visual circle {
+  /* A travelling pulse frozen part-way along an arc reads as a stray mark, so
+     it is not shown at all; the arc underneath still carries the meaning. */
+  .net-pulse,
+  .kan-pulse {
+    display: none;
+  }
+
+  /* Only the first episode is shown; nothing rotates. */
+  .net-episode {
+    opacity: 0;
+  }
+
+  .net-episode.is-live {
     opacity: 1;
+  }
+
+  .kan-frozen,
+  .kan-cell,
+  .kan-node-sum,
+  .kan-node-out {
+    opacity: 1;
+  }
+
+  .plate-mark,
+  .off-point,
+  .net-node-source {
+    opacity: 1;
+  }
+
+  /* The cue stays; only its nudge goes. */
+  .plate-swipe span {
+    animation: none;
+    transform: none;
+  }
+
+  .net-node-burst {
+    opacity: 0;
+  }
+
+  .belief-disc,
+  .off-link,
+  .cue-curve {
+    stroke-dashoffset: 0;
+  }
+
+  .cue-head {
+    opacity: 1;
+  }
+
+  /* The comet only exists to mark a sweep that is not happening. */
+  .plate-head {
+    display: none;
+  }
+
+  .plate-burst {
+    opacity: 0;
+  }
+
+  /* The pointer parallax is a transition, not an animation, and it is already
+     refused by figures.js; this makes the resting state explicit. */
+  .plate-svg {
+    transform: none;
   }
 
   /* Nothing may stay hidden waiting on a transition that will not run. */

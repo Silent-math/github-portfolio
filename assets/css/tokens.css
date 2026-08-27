@@ -6,13 +6,14 @@
   /* Ground and ink. Warm near-black, warm off-white, four text tiers. */
   --bg: #0d0b09;
   --bg-deep: #080706;
-  --surface: #131110;
   --text: #ede6da;
   --text-2: #c3b9aa;
   --muted: #9a9083;
   --subtle: #837a6c;
   --rule: rgba(237, 230, 218, 0.11);
   --rule-strong: rgba(237, 230, 218, 0.2);
+  /* One step below --rule, for plate grids that must sit under the drawing. */
+  --rule-faint: rgba(237, 230, 218, 0.055);
 
   /* Accent. Burnt amber: the same hue family as before, less saturated. */
   --accent: #e07a35;
@@ -21,37 +22,50 @@
   --sand: #cbb492;
   --copper: #c2532a;
 
-  /* Read by site.js so the signal canvas follows these tokens. */
-  --signal-rgb: 224 122 53;
-  --signal-grid: rgba(237, 230, 218, 0.03);
+  /* Channel triples. The plates and the hero canvas mix their own alphas from
+     these, so no file below this one carries a second copy of the palette. */
+  --accent-rgb: 224 122 53;
+  --sand-rgb: 203 180 146;
+  --ink-rgb: 237 230 218;
 
-  /* Faces. Fraunces sets headings, DM Sans sets everything else. DM Mono is
-     down to a single deliberate use: the footer copyright line. */
+  /* Faces. Fraunces sets headings, DM Sans sets everything read at length.
+     DM Mono is the measurement voice: ordinals, axis ticks, plate notation,
+     years and the footer line. */
   --font-display: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
   --font-body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
 
-  /* Type scale. Five sizes and two line heights, used everywhere.
+  /* Type scale. Six sizes and two line heights, used everywhere.
      There is no literal font-size below this block. */
+  --fs-display: clamp(2.75rem, 6.6vw, 4.5rem);
   --fs-h1: clamp(2rem, 4vw, 2.75rem);
   --fs-h2: clamp(1.5rem, 2.5vw, 1.875rem);
   --fs-h3: clamp(1.125rem, 1.6vw, 1.375rem);
   --fs-body: 1.0625rem;
   --fs-small: 0.9375rem;
+  --fs-mono: 0.8125rem;
   --lh-body: 1.6;
   --lh-heading: 1.2;
 
+  --tr-display: -0.028em;
   --tr-h1: -0.018em;
   --tr-h2: -0.012em;
   --tr-h3: -0.005em;
   --tr-label: 0.07em;
+  --tr-mono: 0.04em;
 
   /* Measure and layout. The em values are calibrated to DM Sans: its average
      character is about 0.49em, so 34em lands near 69 characters. */
   --measure: 34em;
   --measure-lede: 26em;
   --space-section: clamp(48px, 5.5vw, 80px);
-  --shell: 1100px;
+  --shell: 1240px;
   --gutter: 56px;
   --radius: 2px;
+
+  /* The manuscript grid. Every section is rail + main: ordinals and headings
+     sit in the rail, running text in main, and plates break out across both. */
+  --rail: clamp(150px, 18vw, 232px);
+  --rail-gap: clamp(24px, 3.4vw, 56px);
+  --bleed: calc(-1 * (var(--rail) + var(--rail-gap)));
 }

@@ -1,230 +1,579 @@
 /* ---------------------------------------------------------------------------
-   Figures. Flat, hairline, no glow: these should read as plates in a paper.
+   Plates. Every figure on the site is an original drawing built from computed
+   geometry: flat, hairline, no glow, no fill that is not a real quantity.
+   They read as plates in a paper, and they break out of the reading column to
+   the full shell width.
    --------------------------------------------------------------------------- */
 
-.project-visual {
+.plate {
   position: relative;
-  display: flex;
-  min-height: 320px;
-  flex-direction: column;
-  justify-content: center;
+  margin-top: clamp(28px, 3.4vw, 44px);
+  padding-block: clamp(14px, 1.8vw, 24px);
   overflow: hidden;
-  padding: 24px;
-  border-left: 1px solid var(--rule);
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
   background: var(--bg-deep);
   contain: paint;
 }
 
-.project-visual svg {
-  width: 100%;
-  margin-block: auto;
-  /* The pointer tilt is kept as a mechanism but scaled to a third of what
-     site.js reports, so it registers without announcing itself. */
-  transform: perspective(1200px) rotateX(calc(var(--tilt-x, 0deg) * 0.3)) rotateY(calc(var(--tilt-y, 0deg) * 0.3));
-  transform-origin: center;
-  transition: transform 220ms ease;
+/* A plate inside the reading column breaks out across the rail as well, so
+   figures run full width while the text stays indented. Plates that already
+   sit at shell width (the Work cases, 404) keep their own margins. */
+.band-body .plate {
+  margin-inline-start: var(--bleed);
 }
 
-.project-visual.is-reactive svg {
+.plate-svg {
+  width: 100%;
+  height: auto;
+  /* The pointer parallax is kept as a mechanism but scaled down hard: on a
+     plate this wide, anything more than a fraction of a degree wobbles. */
+  transform: perspective(2400px)
+    rotateX(calc(var(--tilt-x, 0deg) * 0.16))
+    rotateY(calc(var(--tilt-y, 0deg) * 0.16));
+  transform-origin: center;
+  transition: transform 240ms ease;
+}
+
+.plate.is-reactive .plate-svg {
   transition: none;
   will-change: transform;
 }
 
-/* Idle motion pauses while the figure is off screen. site.js toggles
+/* Idle motion pauses while the plate is off screen. figures.js toggles
    .is-offscreen from an IntersectionObserver. The default is running, so a
-   figure still animates (rather than sitting on an invisible keyframe) if the
+   plate still animates (rather than sitting on an invisible keyframe) if the
    script never gets to it. */
-.project-visual.is-offscreen svg * {
+.plate.is-offscreen .plate-svg * {
   animation-play-state: paused;
 }
 
-.chart-grid path {
+/* ---------------------------------------------------------------------------
+   Sequencing. Every staggered element carries a .step-N class rather than an
+   inline custom property, which is what lets the pages ship a Content Security
+   Policy with no inline-style allowance at all.
+   --------------------------------------------------------------------------- */
+
+.step-0 {
+  --draw-order: 0;
+}
+.step-1 {
+  --draw-order: 1;
+}
+.step-2 {
+  --draw-order: 2;
+}
+.step-3 {
+  --draw-order: 3;
+}
+.step-4 {
+  --draw-order: 4;
+}
+.step-5 {
+  --draw-order: 5;
+}
+.step-6 {
+  --draw-order: 6;
+}
+.step-7 {
+  --draw-order: 7;
+}
+.step-8 {
+  --draw-order: 8;
+}
+.step-9 {
+  --draw-order: 9;
+}
+.step-10 {
+  --draw-order: 10;
+}
+.step-11 {
+  --draw-order: 11;
+}
+.step-12 {
+  --draw-order: 12;
+}
+.step-13 {
+  --draw-order: 13;
+}
+.step-14 {
+  --draw-order: 14;
+}
+.step-15 {
+  --draw-order: 15;
+}
+.step-16 {
+  --draw-order: 16;
+}
+.step-17 {
+  --draw-order: 17;
+}
+.step-18 {
+  --draw-order: 18;
+}
+
+/* ---------------------------------------------------------------------------
+   Shared plate furniture: grid, axes, ticks, notation
+   --------------------------------------------------------------------------- */
+
+.plate-grid path {
+  fill: none;
+  stroke: var(--rule-faint);
+  stroke-width: 1;
+}
+
+.plate-axis,
+.plate-tick path {
   fill: none;
   stroke: var(--rule);
   stroke-width: 1;
 }
 
-/* The band path hugs the line too tightly to read as an interval: it only
-   ever looked like a glow, so it is off. */
-.chart-band {
-  fill: none;
+.plate-label text {
+  fill: var(--subtle);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tr-mono);
 }
 
-.chart-glow {
-  fill: none;
-  stroke: none;
+.plate-label-key,
+text.plate-label-key {
+  fill: var(--accent);
 }
 
-/* --dash is the measured path length, written once by site.js. */
-.chart-line {
+.plate-label-series {
+  fill: var(--muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Plate 01: event-time cumulative abnormal return. A permutation null band,
+   the issuer's response, and three sector peers arriving one lag behind each
+   other. The draw order is the point: the response spreads.
+   --------------------------------------------------------------------------- */
+
+.plate-null {
+  fill: rgb(var(--ink-rgb) / 0.05);
+  stroke: var(--rule);
+  stroke-dasharray: 2 5;
+  stroke-width: 1;
+}
+
+.plate-event {
+  fill: none;
+  stroke: rgb(var(--accent-rgb) / 0.45);
+  stroke-dasharray: 3 5;
+  stroke-width: 1;
+}
+
+.plate-mark {
+  fill: var(--accent);
+  animation: plate-mark-pop 8s ease-out infinite;
+}
+
+/* The filing lands: one ring out of the event mark at the top of every cycle,
+   so the restart is something that happens rather than something that has
+   quietly already happened. */
+.plate-burst {
   fill: none;
   stroke: var(--accent);
-  stroke-dasharray: var(--dash, 900);
-  stroke-dashoffset: 0;
-  stroke-width: 1.5;
-  animation: draw-line 5s ease-in-out infinite;
-}
-
-/* The cycle starts and ends on the finished curve, so a paused figure rests
-   on a drawn chart rather than an empty one. The reset to undrawn happens
-   while opacity is 0, which is what keeps the loop seamless. */
-@keyframes draw-line {
-  /* 1.5s holding the finished curve */
-  0%,
-  30% {
-    opacity: 1;
-    stroke-dashoffset: 0;
-  }
-
-  /* 400ms fade out */
-  38% {
-    opacity: 0;
-    stroke-dashoffset: 0;
-  }
-
-  /* reset to undrawn while nothing is painted */
-  38.5% {
-    opacity: 0;
-    stroke-dashoffset: var(--dash, 900);
-  }
-
-  40% {
-    opacity: 1;
-    stroke-dashoffset: var(--dash, 900);
-  }
-
-  /* 3s draw */
-  100% {
-    opacity: 1;
-    stroke-dashoffset: 0;
-  }
-}
-
-.finance-visual circle {
-  fill: var(--accent);
-  stroke: none;
-  animation: dot-pulse 3.4s ease-in-out infinite;
-}
-
-@keyframes dot-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.28;
-  }
-}
-
-.thesis-visual {
-  border-right: 1px solid var(--rule);
-  border-left: 0;
-}
-
-/* Belief regions breathe, out of phase with each other. */
-.thesis-visual [fill="url(#cluster-a)"],
-.thesis-visual [fill="url(#cluster-b)"] {
-  animation: breathe 3.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+  stroke-width: 1;
   transform-box: fill-box;
   transform-origin: center;
+  animation: plate-burst 8s ease-out infinite;
 }
 
-.thesis-visual [fill="url(#cluster-a)"] {
-  fill: rgba(224, 122, 53, 0.05);
-  stroke: rgba(224, 122, 53, 0.28);
-  stroke-width: 1;
-}
-
-.thesis-visual [fill="url(#cluster-b)"] {
-  fill: rgba(203, 180, 146, 0.04);
-  stroke: rgba(203, 180, 146, 0.26);
-  stroke-width: 1;
-  animation-delay: -1.6s;
-}
-
-@keyframes breathe {
+@keyframes plate-mark-pop {
   0%,
+  66% {
+    opacity: 0.35;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
   100% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes plate-burst {
+  0%,
+  68% {
+    opacity: 0;
     transform: scale(1);
   }
 
-  50% {
-    transform: scale(1.03);
+  70% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+
+  86%,
+  100% {
+    opacity: 0;
+    transform: scale(5.2);
   }
 }
 
-.project-thesis .project-copy {
-  order: 2;
-}
-
-.project-thesis .project-visual {
-  order: 1;
-}
-
-.evidence-a {
-  fill: var(--accent);
-}
-
-.evidence-b {
-  fill: var(--sand);
-}
-
-/* Evidence points wander a couple of user units, desynchronised by a negative
-   delay per point so they never drift as a block. */
-.evidence-points circle {
-  animation: drift 3.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
-}
-
-.evidence-b circle {
-  animation-duration: 3.6s;
-}
-
-.evidence-points circle:nth-child(2) {
-  animation-delay: -0.64s;
-}
-
-.evidence-points circle:nth-child(3) {
-  animation-delay: -1.28s;
-}
-
-.evidence-points circle:nth-child(4) {
-  animation-delay: -1.92s;
-}
-
-.evidence-points circle:nth-child(5) {
-  animation-delay: -2.56s;
-}
-
-/* Units are viewBox units: the figure renders at roughly 0.8 scale, so this
-   is about ten pixels of travel per step. The easing gives each step a fast
-   attack and a slow settle rather than a constant slide. */
-@keyframes drift {
+@keyframes plate-pulse {
   0%,
   100% {
-    transform: translate(0, 0);
-  }
-
-  25% {
-    transform: translate(13px, -10px);
+    opacity: 1;
   }
 
   50% {
-    transform: translate(5px, 13px);
-  }
-
-  75% {
-    transform: translate(-13px, 7px);
+    opacity: 0.3;
   }
 }
 
-/* The conflict marker: its dash marches slowly, so the one unresolved part of
-   the figure is the one part that never settles. */
-.unknown-ring {
-  fill: var(--bg-deep);
+/* --len is the measured path length, written once by figures.js. */
+.plate-series,
+.plate-peer {
+  fill: none;
+  stroke-dasharray: var(--len, 1400px);
+  stroke-dashoffset: 0;
+  animation: plate-draw 8s cubic-bezier(0.33, 0.86, 0.3, 1) infinite;
+  animation-delay: calc(var(--draw-order, 0) * 380ms);
+}
+
+.plate-series {
+  stroke: var(--accent);
+  stroke-width: 1.75;
+}
+
+.plate-peer {
+  stroke: rgb(var(--sand-rgb) / 0.62);
+  stroke-width: 1.15;
+}
+
+/* The cycle starts and ends on the finished curve, so a paused plate rests on
+   a drawn chart rather than an empty one. The reset to undrawn happens while
+   opacity is 0, which is what keeps the loop seamless. */
+@keyframes plate-draw {
+  /* five of the eight seconds are spent on the finished curve; the sweep that
+     replaces it takes about two and a half, staggered 380ms per series */
+  0%,
+  64% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  67% {
+    opacity: 0;
+    stroke-dashoffset: 0;
+  }
+
+  67.5% {
+    opacity: 0;
+    stroke-dashoffset: var(--len, 1400px);
+  }
+
+  69% {
+    opacity: 1;
+    stroke-dashoffset: var(--len, 1400px);
+  }
+
+  100% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* A short bright segment pinned to the drawing head. The dash pattern's period
+   is exactly the path length plus the segment, so only one segment ever exists
+   on the path, and the offset range puts it at the start and then at the end. */
+.plate-head {
+  fill: none;
+  stroke-dasharray: 18px var(--len, 1400px);
+  stroke-dashoffset: 18px;
+  stroke-linecap: round;
+  animation: plate-head 8s cubic-bezier(0.33, 0.86, 0.3, 1) infinite;
+  animation-delay: calc(var(--draw-order, 0) * 380ms);
+}
+
+.plate-head-lead {
+  stroke: var(--accent-soft);
+  stroke-width: 3;
+}
+
+.plate-head-peer {
+  stroke: var(--sand);
+  stroke-width: 2.2;
+}
+
+@keyframes plate-head {
+  0%,
+  68% {
+    opacity: 0;
+    stroke-dashoffset: 18px;
+  }
+
+  69% {
+    opacity: 1;
+    stroke-dashoffset: 18px;
+  }
+
+  94% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: calc(18px - var(--len, 1400px));
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Plate 02: the belief simplex. A point in the triangle is read as a
+   possibility distribution and decomposed into a consonant mass assignment;
+   the bars are the belief and plausibility that follow from it. simplex.js
+   drives the point, the ignorance ring and the bar widths.
+   --------------------------------------------------------------------------- */
+
+/* The scroller is a child rather than the plate itself, so the swipe cue can
+   stay pinned to the plate while the drawing pans underneath it. */
+.plate-scroll {
+  width: 100%;
+}
+
+/* Shown only where a plate actually pans, and only until it has been panned:
+   an instruction the reader has already followed is noise. */
+.plate-swipe {
+  position: absolute;
+  z-index: 2;
+  right: 14px;
+  bottom: 12px;
+  display: none;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  padding: 6px 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tr-mono);
+  line-height: 1;
+  pointer-events: none;
+  transition: opacity 240ms ease;
+}
+
+.plate-swipe span {
+  color: var(--accent);
+  animation: swipe-nudge 2.6s ease-in-out infinite;
+}
+
+.plate.is-panned .plate-swipe {
+  opacity: 0;
+}
+
+@keyframes swipe-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Plate controls. The tour runs on its own; the toggle hands the pointer over
+   so a reader can steer the belief point, and the cue says so once. Both are
+   hidden where there is no hover, because there the tour is the whole thing.
+   --------------------------------------------------------------------------- */
+
+.plate-cued {
+  pointer-events: none;
+}
+
+.plate-cued.is-steering {
+  pointer-events: auto;
+}
+
+.plate-toggle {
+  position: absolute;
+  z-index: 2;
+  top: 14px;
+  right: 18px;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--bg-deep);
+  color: var(--accent-soft);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.plate-toggle:hover {
+  border-color: var(--accent);
+}
+
+.plate-toggle[aria-pressed="true"] {
+  border-color: var(--accent);
+}
+
+.plate-toggle-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-pause {
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-width: 1.6;
+}
+
+.icon-play {
+  fill: currentcolor;
+  stroke: none;
+}
+
+.plate-toggle .icon-play,
+.plate-toggle[aria-pressed="true"] .icon-pause {
+  display: none;
+}
+
+.plate-toggle[aria-pressed="true"] .icon-play {
+  display: block;
+}
+
+.plate-cue {
+  position: absolute;
+  z-index: 1;
+  top: 16px;
+  right: 66px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  transition: opacity 260ms ease;
+}
+
+/* Once the reader has taken the pointer, the cue has said everything it had
+   to say. */
+.plate-cued.is-explored .plate-cue {
+  opacity: 0;
+}
+
+.plate-cue-text {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-style: italic;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  letter-spacing: var(--tr-h3);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.plate-cue-arrow {
+  width: 58px;
+  height: 40px;
+  flex: none;
+}
+
+.cue-curve,
+.cue-head {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-width: 1.2;
+}
+
+/* The arrow draws itself, like everything else on the site does. */
+.cue-curve {
+  stroke-dasharray: var(--len, 70px);
+  stroke-dashoffset: 0;
+  animation: cue-draw 7s ease-in-out infinite;
+}
+
+.cue-head {
+  animation: cue-head 7s ease-in-out infinite;
+}
+
+@keyframes cue-draw {
+  0%,
+  62% {
+    stroke-dashoffset: 0;
+  }
+
+  70% {
+    stroke-dashoffset: var(--len, 70px);
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes cue-head {
+  0%,
+  62% {
+    opacity: 1;
+  }
+
+  70%,
+  92% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Both are revealed by simplex.js. Without it the plate still draws a
+   complete, correct figure, and a control that cannot do anything would be a
+   lie. */
+.plate-toggle[hidden],
+.plate-cue[hidden] {
+  display: none;
+}
+
+@media (hover: none) {
+  .plate-toggle,
+  .plate-cue {
+    display: none;
+  }
+}
+
+.simplex-edge {
+  fill: none;
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+.simplex-vertex {
+  fill: var(--muted);
+}
+
+.simplex-guide {
+  fill: none;
+  stroke: var(--rule);
+  stroke-dasharray: 2 6;
+  stroke-width: 1;
+}
+
+.simplex-theta {
+  fill: rgb(var(--ink-rgb) / 0.13);
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+}
+
+.belief-disc {
+  fill: rgb(var(--accent-rgb) / 0.06);
   stroke: var(--copper);
   stroke-dasharray: 3 4;
-  stroke-dashoffset: 0;
   stroke-width: 1;
   animation: ring-march 9s linear infinite;
 }
@@ -235,19 +584,300 @@
   }
 }
 
-.unknown-core {
-  fill: var(--copper);
+.belief-point {
+  fill: var(--accent);
+  stroke: var(--bg-deep);
+  stroke-width: 2;
 }
 
-.unknown-tick {
+.mass-track {
   fill: none;
-  stroke: rgba(194, 83, 42, 0.42);
+  stroke: var(--rule);
   stroke-width: 1;
 }
 
-.work-footer {
-  display: flex;
-  padding-top: 24px;
-  align-items: center;
-  gap: 20px;
+.mass-pl {
+  fill: rgb(var(--accent-rgb) / 0.2);
+}
+
+.mass-bel {
+  fill: var(--accent);
+}
+
+.mass-theta {
+  fill: var(--copper);
+}
+
+.mass-key-bel {
+  fill: var(--accent);
+}
+
+.mass-key-pl {
+  fill: rgb(var(--accent-rgb) / 0.2);
+}
+
+/* ---------------------------------------------------------------------------
+   Plate 03: a transfer-entropy network. Most arcs are the ones that do not
+   survive their controls; the four that do carry the travelling pulse.
+   --------------------------------------------------------------------------- */
+
+/* The sector boundary is stated, not implied: without it fifteen nodes read
+   as scatter rather than as three groups. */
+.net-hull {
+  fill: rgb(var(--ink-rgb) / 0.018);
+  stroke: var(--rule-faint);
+  stroke-dasharray: 2 7;
+  stroke-width: 1;
+}
+
+.net-edge {
+  fill: none;
+  stroke: rgb(var(--ink-rgb) / 0.13);
+  stroke-width: 1;
+}
+
+.net-edge-live {
+  stroke: rgb(var(--accent-rgb) / 0.4);
+  stroke-width: 1.2;
+}
+
+/* One episode at a time: the network is fixed, the filing is not, so the
+   source moves from sector to sector. figures.js rotates .is-live. */
+.net-episode {
+  opacity: 0;
+  transition: opacity 620ms ease;
+}
+
+.net-episode.is-live {
+  opacity: 1;
+}
+
+/* Dropping the animation on a dark episode is what resets it, so a newly lit
+   source always emits from the start rather than mid-flight. */
+.net-episode:not(.is-live) .net-pulse {
+  animation: none;
+}
+
+.net-pulse {
+  fill: none;
+  stroke: var(--accent-soft);
+  stroke-dasharray: 18px var(--len, 900px);
+  stroke-dashoffset: 18px;
+  stroke-linecap: round;
+  stroke-width: 2.6;
+  animation: net-travel 4.6s cubic-bezier(0.4, 0, 0.15, 1) infinite;
+  animation-delay: calc(var(--draw-order, 0) * 380ms);
+}
+
+@keyframes net-travel {
+  0% {
+    stroke-dashoffset: 18px;
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  52% {
+    opacity: 1;
+  }
+
+  62%,
+  100% {
+    stroke-dashoffset: calc(18px - var(--len, 900px));
+    opacity: 0;
+  }
+}
+
+.net-node {
+  fill: var(--bg-deep);
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+
+.net-node-source {
+  fill: var(--accent);
+  stroke: none;
+}
+
+/* The filing emits: one ring off the source at the top of every pulse cycle.
+   Same gesture as the event plate, so the two read as one family. */
+.net-node-burst {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: net-emit 4.6s ease-out infinite;
+}
+
+@keyframes net-emit {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  34%,
+  100% {
+    opacity: 0;
+    transform: scale(3.4);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Plate 04: the Kolmogorov-Arnold layer. The activation lives on the edge,
+   not in the node, so each edge carries its own univariate function; the sum
+   nodes are the only thing the nodes do. A forward pass sweeps left to right.
+   --------------------------------------------------------------------------- */
+
+.kan-frozen {
+  fill: rgb(var(--ink-rgb) / 0.03);
+  stroke: var(--rule-strong);
+  stroke-dasharray: 4 4;
+  stroke-width: 1;
+}
+
+.kan-wire,
+.kan-edge {
+  fill: none;
+  stroke: rgb(var(--ink-rgb) / 0.13);
+  stroke-width: 1;
+}
+
+.kan-brace {
+  fill: none;
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+
+.kan-cell-frame {
+  fill: var(--bg-deep);
+  stroke: var(--rule);
+  stroke-width: 1;
+}
+
+.kan-spline {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.4;
+}
+
+.kan-node {
+  fill: var(--bg-deep);
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+
+.kan-node-sum {
+  stroke: var(--rule-strong);
+}
+
+.kan-sigma text {
+  fill: var(--text-2);
+}
+
+.kan-pulse {
+  fill: none;
+  stroke: var(--accent-soft);
+  stroke-dasharray: 15px var(--len, 400px);
+  stroke-dashoffset: 15px;
+  stroke-linecap: round;
+  stroke-width: 2.4;
+  animation: kan-travel 4.4s cubic-bezier(0.4, 0, 0.15, 1) infinite;
+  animation-delay: calc(var(--draw-order, 0) * 150ms);
+}
+
+@keyframes kan-travel {
+  0%,
+  4% {
+    stroke-dashoffset: 15px;
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  38%,
+  100% {
+    stroke-dashoffset: calc(15px - var(--len, 400px));
+    opacity: 0;
+  }
+}
+
+.kan-frozen,
+.kan-cell,
+.kan-node-sum,
+.kan-node-out {
+  animation: kan-pass 4.4s cubic-bezier(0.3, 0, 0.2, 1) infinite;
+  animation-delay: calc(var(--draw-order, 0) * 150ms);
+}
+
+.kan-frozen {
+  --rest: 0.6;
+}
+
+.kan-cell {
+  --rest: 0.5;
+}
+
+.kan-node-sum,
+.kan-node-out {
+  --rest: 0.58;
+}
+
+@keyframes kan-pass {
+  0%,
+  5% {
+    opacity: var(--rest, 0.65);
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  13% {
+    opacity: 1;
+  }
+
+  26% {
+    opacity: var(--rest, 0.65);
+  }
+
+  100% {
+    opacity: var(--rest, 0.65);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Plate 05: one point off the manifold. Used on 404, where that is the joke
+   and also the literal situation.
+   --------------------------------------------------------------------------- */
+
+.manifold {
+  fill: none;
+  stroke: rgb(var(--ink-rgb) / 0.22);
+  stroke-width: 1;
+}
+
+.manifold-cloud circle {
+  fill: rgb(var(--sand-rgb) / 0.42);
+}
+
+.off-link {
+  fill: none;
+  stroke: var(--copper);
+  stroke-dasharray: 3 4;
+  stroke-width: 1;
+  animation: ring-march 9s linear infinite;
+}
+
+.off-point {
+  fill: var(--accent);
+  animation: plate-pulse 3.4s ease-in-out infinite;
 }

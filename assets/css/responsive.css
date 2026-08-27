@@ -2,29 +2,42 @@
    Responsive
    --------------------------------------------------------------------------- */
 
+/* The manuscript grid collapses here: the rail folds onto one line above the
+   content, so the ordinal reads as a prefix to the heading rather than as a
+   margin note, and nothing breaks out of the reading column any more. */
 @media (max-width: 960px) {
-  .page-intro {
-    grid-template-columns: 1fr;
+  :root {
+    --bleed: 0px;
   }
 
-  .project,
-  .project-thesis {
-    grid-template-columns: 1fr;
+  .band {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(18px, 3vw, 26px);
   }
 
-  .project-visual {
-    min-height: 300px;
-    border-top: 1px solid var(--rule);
-    border-left: 0;
+  .band-rail {
+    position: static;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 14px;
   }
 
-  .project-thesis .project-copy,
-  .project-thesis .project-visual {
-    order: initial;
+  .band-index {
+    width: auto;
+    flex: none;
   }
 
-  .thesis-visual {
-    border-right: 0;
+  .band-index::after {
+    display: none;
+  }
+
+  .not-found-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(30px, 6vw, 48px);
+  }
+
+  .not-found {
+    min-height: 0;
   }
 }
 
@@ -55,9 +68,32 @@
     padding: 5px 9px;
   }
 
-  .project-visual {
-    min-height: 260px;
-    padding: 18px;
+  /* A plate is a wide drawing with notation on it. Shrunk to a phone it stops
+     being readable, so below this width it keeps a working size and pans
+     inside its own scroller instead of collapsing. */
+  .plate-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+  }
+
+  .plate-swipe {
+    display: flex;
+  }
+
+  .plate-svg {
+    min-width: 780px;
+  }
+
+  .plate-compact .plate-svg {
+    min-width: 420px;
+  }
+
+  /* The plate pans here, and an absolutely placed control would pan out of
+     sight with it. The tour is the whole figure at this width. */
+  .plate-toggle,
+  .plate-cue {
+    display: none;
   }
 
   .work-footer,
@@ -86,11 +122,7 @@
     border-left: 0;
   }
 
-  .case-header,
-  .case-body,
-  .resume-entry,
-  .compact-section,
-  .about-lede {
+  .resume-entry {
     grid-template-columns: 1fr;
     gap: 16px;
   }
@@ -107,6 +139,15 @@
   .award-list li {
     grid-template-columns: 44px minmax(0, 1fr);
     gap: 14px;
+  }
+
+  /* The leader needs room to read as a leader. It has none here. */
+  .page-index .index-leader {
+    display: none;
+  }
+
+  .page-index li {
+    flex-wrap: wrap;
   }
 }
 

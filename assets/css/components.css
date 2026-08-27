@@ -43,7 +43,7 @@
   align-items: center;
   gap: 6px;
   padding-bottom: 2px;
-  border-bottom: 1px solid rgba(224, 122, 53, 0.4);
+  border-bottom: 1px solid rgb(var(--accent-rgb) / 0.4);
   color: var(--accent-soft);
   font-size: var(--fs-body);
   text-decoration: none;

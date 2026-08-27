@@ -23,10 +23,58 @@ for (const [path, title] of pages) {
   });
 }
 
-test("the legacy about route returns to the experience section", async ({ page }) => {
-  await page.goto("/about.html");
-  await expect(page).toHaveURL(/index\.html#experience$/);
-  await expect(page.getByRole("heading", { name: "Experience" })).toBeVisible();
+// The site is served from a project path, not the user root. Getting this
+// wrong is invisible in the browser and silently wrong everywhere else.
+const BASE = "https://silent-math.github.io/github-portfolio/";
+
+test("deployment metadata targets the published project path", async ({ page, request }) => {
+  for (const [path, url] of [
+    ["/index.html", BASE],
+    ["/work.html", `${BASE}work.html`],
+  ]) {
+    await page.goto(path);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", url);
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute("content", url);
+    await expect(page.locator('link[hreflang="x-default"]')).toHaveAttribute("href", url);
+  }
+
+  const sitemap = await (await request.get("/sitemap.xml")).text();
+  expect(sitemap).toContain(`<loc>${BASE}</loc>`);
+  expect(sitemap).toContain(`<loc>${BASE}work.html</loc>`);
+  expect(sitemap).not.toContain("github.io/</loc>");
+
+  const robots = await (await request.get("/robots.txt")).text();
+  expect(robots).toContain(`Sitemap: ${BASE}sitemap.xml`);
+});
+
+test("every page ships a content security policy with no inline allowance", async ({ page }) => {
+  for (const path of ["/index.html", "/work.html", "/404.html"]) {
+    await page.goto(path);
+    const policy = await page
+      .locator('meta[http-equiv="Content-Security-Policy"]')
+      .getAttribute("content");
+    expect(policy).toContain("default-src 'none'");
+    // The inline language bootstrap is covered by a hash, never by a blanket
+    // allowance; nothing on the site needs an inline style at all.
+    expect(policy).toContain("'sha256-");
+    expect(policy).not.toContain("'unsafe-inline'");
+    expect(policy).not.toContain("'unsafe-eval'");
+  }
+});
+
+test("plates that pan on a phone say so, and stop saying so once panned", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/index.html");
+  const plate = page.locator(".project-finance .plate");
+  await plate.scrollIntoViewIfNeeded();
+  const cue = plate.locator(".plate-swipe");
+  await expect(cue).toBeVisible();
+  await expect(cue).toHaveCSS("opacity", "1");
+
+  await plate.locator(".plate-scroll").evaluate((node) => {
+    node.scrollLeft = 200;
+  });
+  await expect(cue).toHaveCSS("opacity", "0");
 });
 
 test("the home page follows the supplied section order", async ({ page }) => {

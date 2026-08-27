@@ -3,12 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The two script hashes cover the inline language bootstrap below.
+         Editing that script by even one byte invalidates them and the page
+         will stop switching language, so regenerate both if you touch it.
+         frame-ancestors and report-uri are ignored in a meta policy; Pages
+         cannot send headers, so they are left out rather than pretended. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-CaFgjTSPOZJTgmKdlRpZ5a+5i5pzxekLUE9NzeRwFL8=' 'sha256-fQZLyEYGN+wuoNHLWSVZeMxbkgmcyynPLiGEUkC0Xqk='; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; connect-src 'none'; base-uri 'self'; form-action 'none'">
     <meta name="theme-color" content="#0d0b09">
     <meta name="robots" content="noindex">
     <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=DM+Sans:opsz,wght@9..40,400..600&family=Fraunces:opsz,wght@9..144,400..600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400&family=DM+Sans:opsz,wght@9..40,400..600&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..600,0..100,0..1;1,9..144,400..600,0..100,0..1&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/tokens.css">
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/components.css">
@@ -58,11 +64,74 @@
     </nav>
 
     <main class="not-found shell" id="main-content">
-      <div>
-        <div class="not-found-code" data-i18n="nf.label">Error 404</div>
-        <h1 data-i18n="nf.title">Page not found</h1>
-        <p data-i18n="nf.body">The requested page does not exist.</p>
-        <a class="button button-primary" href="index.html" data-i18n="nf.home">Home</a>
+      <div class="not-found-inner">
+        <div>
+          <div class="not-found-code" data-i18n="nf.label">Error 404</div>
+          <h1 data-i18n="nf.title">Page not found</h1>
+          <p data-i18n="nf.body">The requested page does not exist.</p>
+          <a class="button button-primary" href="index.html" data-i18n="nf.home">Home</a>
+        </div>
+        <!-- Plate: a point off the manifold, which is the literal situation. -->
+        <div class="plate plate-compact" data-reactive-visual aria-hidden="true">
+          <div class="plate-scroll">
+            <svg class="plate-svg" viewBox="24 40 500 176" preserveAspectRatio="xMidYMid meet" role="presentation" focusable="false">
+              <path class="manifold" d="M40 150C41.8 150.8 47.3 153.3 51 155C54.7 156.7 58.3 158.4 62 160C65.7 161.6 69.3 163.2 73 164.7C76.7 166.2 80.3 167.8 84 169.2C87.7 170.6 91.3 172 95 173.3C98.7 174.6 102.3 175.9 106 177C109.7 178.1 113.3 179.2 117 180.1C120.7 181 124.3 182 128 182.7C131.7 183.5 135.3 184.1 139 184.6C142.7 185.1 146.3 185.5 150 185.8C153.7 186.1 157.3 186.3 161 186.3C164.7 186.4 168.3 186.3 172 186.1C175.7 185.9 179.3 185.6 183 185.1C186.7 184.6 190.3 184 194 183.3C197.7 182.6 201.3 181.8 205 180.9C208.7 180 212.3 178.9 216 177.7C219.7 176.5 223.3 175.2 227 173.8C230.7 172.4 234.3 171 238 169.4C241.7 167.8 245.3 166.2 249 164.4C252.7 162.6 256.3 160.7 260 158.8C263.7 156.9 267.3 154.9 271 152.9C274.7 150.9 278.3 148.8 282 146.7C285.7 144.6 289.3 142.4 293 140.2C296.7 138 300.3 135.7 304 133.5C307.7 131.3 311.3 129 315 126.8C318.7 124.6 322.3 122.3 326 120.1C329.7 117.9 333.3 115.7 337 113.6C340.7 111.5 344.3 109.4 348 107.3C351.7 105.3 355.3 103.2 359 101.3C362.7 99.4 366.3 97.6 370 95.8C373.7 94 377.3 92.3 381 90.7C384.7 89.1 388.3 87.5 392 86.1C395.7 84.7 399.3 83.4 403 82.2C406.7 81 410.3 80 414 79C417.7 78 421.3 77.1 425 76.4C428.7 75.7 432.3 75.1 436 74.6C439.7 74.1 443.3 73.7 447 73.5C450.7 73.3 454.3 73.2 458 73.2C461.7 73.2 465.3 73.4 469 73.6C472.7 73.9 478.2 74.5 480 74.7"></path>
+              <g class="manifold-cloud">
+                <circle cx="195.4" cy="185.6" r="2.4"></circle>
+                <circle cx="106.8" cy="169.5" r="2.4"></circle>
+                <circle cx="358.8" cy="100.7" r="2.4"></circle>
+                <circle cx="165.6" cy="188.8" r="2.4"></circle>
+                <circle cx="399.4" cy="70.1" r="2.4"></circle>
+                <circle cx="379.1" cy="84.6" r="2.4"></circle>
+                <circle cx="324.4" cy="116.1" r="2.4"></circle>
+                <circle cx="241.6" cy="164.4" r="2.4"></circle>
+                <circle cx="163.6" cy="195.2" r="2.4"></circle>
+                <circle cx="370.8" cy="101.9" r="2.4"></circle>
+                <circle cx="150.8" cy="178.3" r="2.4"></circle>
+                <circle cx="100.6" cy="179.3" r="2.4"></circle>
+                <circle cx="186.6" cy="184" r="2.4"></circle>
+                <circle cx="225.1" cy="174.9" r="2.4"></circle>
+                <circle cx="468.4" cy="69.1" r="2.4"></circle>
+                <circle cx="116.3" cy="188.5" r="2.4"></circle>
+                <circle cx="386.2" cy="80.2" r="2.4"></circle>
+                <circle cx="68.7" cy="151.3" r="2.4"></circle>
+                <circle cx="440.9" cy="71.1" r="2.4"></circle>
+                <circle cx="213" cy="181" r="2.4"></circle>
+                <circle cx="388.4" cy="84.6" r="2.4"></circle>
+                <circle cx="277.2" cy="166.9" r="2.4"></circle>
+                <circle cx="202.8" cy="179.1" r="2.4"></circle>
+                <circle cx="72.3" cy="168.7" r="2.4"></circle>
+                <circle cx="85.1" cy="162.2" r="2.4"></circle>
+                <circle cx="432.8" cy="94.5" r="2.4"></circle>
+                <circle cx="470.1" cy="71.2" r="2.4"></circle>
+                <circle cx="219.1" cy="184" r="2.4"></circle>
+                <circle cx="70.4" cy="160" r="2.4"></circle>
+                <circle cx="474.3" cy="73.2" r="2.4"></circle>
+                <circle cx="93.3" cy="164.8" r="2.4"></circle>
+                <circle cx="90.3" cy="192.5" r="2.4"></circle>
+                <circle cx="46.5" cy="135.2" r="2.4"></circle>
+                <circle cx="342.2" cy="103.8" r="2.4"></circle>
+                <circle cx="56.6" cy="163.1" r="2.4"></circle>
+                <circle cx="255.8" cy="152.6" r="2.4"></circle>
+                <circle cx="383.1" cy="104.9" r="2.4"></circle>
+                <circle cx="353.6" cy="93.3" r="2.4"></circle>
+                <circle cx="406" cy="84.4" r="2.4"></circle>
+                <circle cx="372" cy="102.3" r="2.4"></circle>
+                <circle cx="248.4" cy="167.8" r="2.4"></circle>
+                <circle cx="74.9" cy="138.3" r="2.4"></circle>
+                <circle cx="422.9" cy="86.9" r="2.4"></circle>
+                <circle cx="210.8" cy="166.1" r="2.4"></circle>
+              </g>
+              <path class="off-link" data-measure d="M252 58L299.5 136.2"></path>
+              <circle class="off-point" cx="252" cy="58" r="5"></circle>
+              <g class="plate-label">
+                <text class="plate-label-key" x="262.8" y="97.1" text-anchor="end">d</text>
+                <text x="490" y="70">M</text>
+              </g>
+            </svg>
+          </div>
+          <p class="plate-swipe" data-i18n="plate.swipe" aria-hidden="true">Swipe to explore <span aria-hidden="true">→</span></p>
+        </div>
       </div>
     </main>
 

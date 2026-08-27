@@ -20,6 +20,7 @@ const strings = {
     "a11y.brand": "Rodrigo Pizarro, home",
     "a11y.lang": "Language",
     "a11y.cv": "CV in English, PDF, opens in a new tab",
+    "a11y.simplexToggle": "Play or pause the simplex tour",
 
     "nav.experience": "Experience",
     "nav.work": "Work",
@@ -42,6 +43,10 @@ const strings = {
 
     "work.heading": "Work",
     "work.more": "Work",
+    // The two cues on the site: one points at the simplex toggle, the other
+    // says a plate pans on a phone.
+    "plate.try": "Try it yourself!",
+    "plate.swipe": "Swipe to explore",
     "work.p1.title": "01 · Information diffusion in financial markets · 2026",
     "work.p1.desc":
       "Event study on 66 US large caps across 11 GICS sectors, using daily data from 2015 to 2025 and SEC 8-K item 2.02 earnings filings.",
@@ -179,6 +184,7 @@ const strings = {
     "a11y.brand": "Rodrigo Pizarro, inicio",
     "a11y.lang": "Idioma",
     "a11y.cv": "CV en español, PDF, abre en una pestaña nueva",
+    "a11y.simplexToggle": "Reproduce o pausa el recorrido del simplex",
 
     "nav.experience": "Experiencia",
     "nav.work": "Proyectos",
@@ -199,6 +205,8 @@ const strings = {
 
     "work.heading": "Proyectos",
     "work.more": "Proyectos",
+    "plate.try": "¡Pruébalo tú mismo!",
+    "plate.swipe": "Desliza para explorar",
     "work.p1.title": "01 · Difusión de información en mercados financieros · 2026",
     "work.p1.desc":
       "Estudio de eventos sobre 66 acciones de gran capitalización de EE. UU. en 11 sectores GICS, con datos diarios de 2015 a 2025 y reportes de resultados SEC 8-K ítem 2.02.",

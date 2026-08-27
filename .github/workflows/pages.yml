@@ -1,0 +1,92 @@
+# Deploys the site to GitHub Pages.
+#
+# The published artifact is assembled from an explicit allowlist rather than
+# from the repository root, so nothing that is only used to build or check the
+# site ever reaches the web: README.md, AGENT-DRIVER.md, package.json,
+# package-lock.json, playwright.config.js, .htmlvalidate.json and tests/ all
+# stay behind. If a new top-level file becomes part of the site, add it to the
+# copy step below or it will not deploy.
+#
+# The site is served from a project path, https://silent-math.github.io/github-portfolio/.
+# Every asset reference is relative, so nothing here depends on that; the
+# absolute URLs in the canonical, og:url, hreflang, sitemap and robots entries
+# do, and a test asserts them.
+
+name: Deploy to Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race, but never cancel one that is already publishing.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Audit and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # Zero advisories at any severity, not merely zero high ones.
+      - name: Audit dependencies
+        run: npm audit --audit-level=info
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      # html-validate over the three pages, then the Playwright suite.
+      - name: Validate and test
+        run: npm test
+
+  build:
+    name: Assemble the site
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy the published files
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          cp index.html work.html 404.html robots.txt sitemap.xml .nojekyll _site/
+          cp -R assets _site/assets
+          # Fail loudly rather than deploying a site with a missing entry point.
+          for required in _site/index.html _site/work.html _site/404.html \
+                          _site/assets/css/tokens.css _site/assets/js/main.js \
+                          _site/assets/docs/rodrigo-pizarro-cv-en.pdf; do
+            test -f "$required" || { echo "missing from the artifact: $required"; exit 1; }
+          done
+          echo "published files:"
+          find _site -type f | sort
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
