@@ -3,7 +3,7 @@
 **Mathematical Engineer.** Statistics, data science and machine learning.
 
 
- **[silent-math.github.io/github-portfolio](https://silent-math.github.io/github-portfolio/)**  - [@silent_math](https://www.instagram.com/silent_math/)
+ **[silent-math.github.io/github-portfolio](https://silent-math.github.io/)**
 
 ---
 
